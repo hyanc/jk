@@ -18,15 +18,9 @@
 		<style>
 			html {-webkit-text-size-adjust:100%}
 			body {font-family:arial;font-size:1vw;text-align:center;margin-top:30vh}
-			@media screen and (min-width: 1001px), screen and (pointer: coarse), screen and (hover: none) {
-				body{font-size:4vh;}
-			}
-			@media screen and (max-width: 1000px) {
-				body{font-size:2.2vh;}
-			}
-			@media (prefers-color-scheme: dark) {
-				body {background-color:#1E1E1E;color:#299ED6}
-			}
+			@media screen and (min-width: 1001px), screen and (pointer: coarse), screen and (hover: none) {body{font-size:4vh;}}
+			@media screen and (max-width: 1000px) {body{font-size:2.2vh;}}
+			@media (prefers-color-scheme: dark) {body {background-color:#1E1E1E;color:#299ED6}}
 		</style>
 	</head>
 	<body>
@@ -34,22 +28,20 @@
 			// Base date: 12 June 2026 = Friday Kliwon
 			const baseDate = new Date("2026-06-12");
 			baseDate.setHours(0, 0, 0, 0);
-
 			const today = new Date();
 			today.setHours(0, 0, 0, 0);
-
+			
 			const weekdays = ["Minggu", "Senin", "Selasa", "Rabu","Kamis", "Jumat", "Sabtu"];
 			const pasaran = ["Kliwon", "Legi", "Pahing", "Pon", "Wage"];
-
+			
 			const diffToday = Math.floor((today - baseDate) / 86400000);
 			const wetonToday = weekdays[today.getDay()] + " " + pasaran[((diffToday % 5) + 5) % 5];
 			let nextFridayKliwon = new Date(today);
 
 			while (true) {
 				const diffDays = Math.floor((nextFridayKliwon - baseDate) / 86400000);
-				const isFriday = nextFridayKliwon.getDay() === 5;
-				const isKliwon =
-				pasaran[((diffDays % 5) + 5) % 5] === "Kliwon";
+				const isFriday = nextFridayKliwon.getDay() === 5; //jumat
+				const isKliwon = pasaran[((diffDays % 5) + 5) % 5] === "Kliwon"; //kliwon
 				if (isFriday && isKliwon) {
 					if (nextFridayKliwon > today) break;
 				}
@@ -63,4 +55,5 @@
 			document.write('<br>');
 			document.write(nextFridayKliwon.toLocaleDateString("id-ID", {day: "numeric",month: "long",year: "numeric"}));
 		</script>
-    </body></html>
+    </body>
+</html>
