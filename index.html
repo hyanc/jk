@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Page Title</title>
+		<title>Jumat Kliwon</title>
 		<meta charset="utf-8">
 		<meta content="Page Description" name="description">
 		<meta content="notranslate" name="google">
@@ -11,78 +11,56 @@
 		<meta content="#1E1E1E" name="theme-color" media="(prefers-color-scheme: dark)">
 		<meta content="width=device-width,initial-scale=1,maximum-scale=1,shrink-to-fit=no,user-scalable=0,viewport-fit=cover" name="viewport">
 		<meta content="#FFFFFF" name="theme-color">
-
 		<meta name="msapplication-navbutton-color" content="#FFFFFF">
 		<meta name="apple-mobile-web-app-status-bar-style" content="white">
-		<meta name="color-scheme" content="light">
-
-		
+		<meta name="color-scheme" content="light">	
 		<meta content="telephone=no" name="format-detection">
-		<!--
-		<meta property="og:url" content="https://hyanc.github.io/minimal/">
-		<meta property="og:type" content="article">
-		<meta property="og:title" content="Whatsapp Page Title">
-		<meta property="og:description" content="Whatsapp Page Description">
-		<meta property="og:image" content="https://hyanc.github.io/minimal/preview.jpg">
-		-->
-		<link rel="icon" href="./favicon.png">
-		<link rel="manifest" href="./manifest.json">
-		<!--
-		<link rel="icon" href="https://hyanc.github.io/minimal/128.png" type="image/x-icon">
-		<link rel="icon" sizes="128x128" href="https://hyanc.github.io/minimal/128.png">
-		<link rel="apple-touch-icon" sizes="128x128" href="https://hyanc.github.io/minimal/128.png">
-		<link rel="apple-touch-icon-precomposed" sizes="128x128" href="https://hyanc.github.io/minimal/128.png">
-		-->
-		<script>if ('serviceWorker' in navigator) {navigator.serviceWorker.register('./sw.js');}</script>
 		<style>
 			html {-webkit-text-size-adjust:100%}
-			body {font-family:arial}
-			@media screen and (max-width: 1000px) { /*phone size below 1000 pixel*/
-				
+			body {font-family:arial;font-size:1vw;text-align:center;margin-top:30vh}
+			@media screen and (min-width: 1001px), screen and (pointer: coarse), screen and (hover: none) {
+				body{font-size:4vh;}
+			}
+			@media screen and (max-width: 1000px) {
+				body{font-size:2.2vh;}
+			}
+			@media (prefers-color-scheme: dark) {
+				body {background-color:#1E1E1E;color:#299ED6}
 			}
 		</style>
 	</head>
 	<body>
-<script>
-// Base date: 12 June 2026 = Friday Kliwon
-const baseDate = new Date("2026-06-12");
-baseDate.setHours(0, 0, 0, 0);
+		<script>
+			// Base date: 12 June 2026 = Friday Kliwon
+			const baseDate = new Date("2026-06-12");
+			baseDate.setHours(0, 0, 0, 0);
 
-const today = new Date();
-today.setHours(0, 0, 0, 0);
+			const today = new Date();
+			today.setHours(0, 0, 0, 0);
 
-const pasaran = ["Kliwon", "Legi", "Pahing", "Pon", "Wage"];
+			const weekdays = ["Minggu", "Senin", "Selasa", "Rabu","Kamis", "Jumat", "Sabtu"];
+			const pasaran = ["Kliwon", "Legi", "Pahing", "Pon", "Wage"];
 
-let nextFridayKliwon = new Date(today);
+			const diffToday = Math.floor((today - baseDate) / 86400000);
+			const wetonToday = weekdays[today.getDay()] + " " + pasaran[((diffToday % 5) + 5) % 5];
+			let nextFridayKliwon = new Date(today);
 
-while (true) {
-    const diffDays = Math.floor((nextFridayKliwon - baseDate) / 86400000);
+			while (true) {
+				const diffDays = Math.floor((nextFridayKliwon - baseDate) / 86400000);
+				const isFriday = nextFridayKliwon.getDay() === 5;
+				const isKliwon =
+				pasaran[((diffDays % 5) + 5) % 5] === "Kliwon";
+				if (isFriday && isKliwon) {
+					if (nextFridayKliwon > today) break;
+				}
+				nextFridayKliwon.setDate(nextFridayKliwon.getDate() + 1);
+			}
+			const daysUntil = Math.floor((nextFridayKliwon - today) / 86400000);
 
-    const isFriday = nextFridayKliwon.getDay() === 5;
-    const isKliwon = pasaran[((diffDays % 5) + 5) % 5] === "Kliwon";
-
-    if (isFriday && isKliwon) {
-        if (nextFridayKliwon > today) break;
-    }
-
-    nextFridayKliwon.setDate(nextFridayKliwon.getDate() + 1);
-}
-
-const daysUntil = Math.floor(
-    (nextFridayKliwon - today) / 86400000
-);
-if (daysUntil === 35) {
-    document.write("Hari ini adalah <b>Jumat Kliwon</b><br>");
-}
-document.write('Jumat kliwon berikutnya: ')
-document.write(daysUntil + ' hari lagi');
-document.write('<br>');
-document.write(
-    nextFridayKliwon.toLocaleDateString("id-ID", {
-        day: "numeric",
-        month: "long",
-        year: "numeric"
-    })
-);
-</script>
+			document.write("Hari ini " + today.toLocaleDateString("id-ID", {day: "numeric",month: "long",year: "numeric"}) + " adalah<br><b>"+wetonToday+"</b><br>");
+			document.write('<br>Jumat Kliwon berikutnya: ')
+			document.write(daysUntil + ' hari lagi.');
+			document.write('<br>');
+			document.write(nextFridayKliwon.toLocaleDateString("id-ID", {day: "numeric",month: "long",year: "numeric"}));
+		</script>
     </body></html>
